@@ -1,0 +1,17 @@
+Once you have the chromosome indices and the segment tree indices for hg19, you can run:
+
+To annotate coordinates at 10kb:
+
+./main.pl -s hg19 -m 1 -d refseq -r 10000 -f sampleData/sample.coordinates
+
+To annotate intervals at 10kb:
+./main.pl -s hg19 -m 2 -d refseq -r 10000 -f sampleData/sample.interval
+
+To annotate SNVs at 10kb:
+./main.pl -s hg19 -m 3 -d refseq -r 10000 -f sampleData/sample.snv
+
+To find closest TSSs:
+./main.pl -s hg19 -m 4 -d refseq -f sampleData/sample.tss
+
+To annotate Indels at 10kb:
+./main.pl -s hg19 -m 5 -d refseq -r 10000 -f sampleData/sample.indel

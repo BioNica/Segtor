@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>FAQ for Segtor</TITLE>
+<META NAME="description" CONTENT="FAQ for Segtor">
+<META NAME="keywords" CONTENT="FAQ">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="FAQ.css">
+
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="/usr/share/latex2html/icons/nx_grp_g.png"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+numbers=left,breaklines=true
+<H1 ALIGN="CENTER">FAQ for Segtor</H1>
+<DIV CLASS="author_info">
+
+</DIV>
+
+<P>
+
+<H1><A NAME="SECTION00010000000000000000">
+Frequently asked questions</A>
+</H1>
+
+<H2><A NAME="SECTION00011000000000000000">
+How come the numbers do not tally up in the all.stat or single.stat ?</A>
+</H2>
+
+<P>
+If you use those files, please note that Segtor will tally up all the unique positions for a given coordinate/interval.  
+<BR>
+For instance, if a coordinate is both upstream of a transcript and downstream of another, Segtor will tally both positions rather than pick one in all.stat. The file single.stat will report both if they belong to different genes but will pick the best one if the transcripts belong to the same gene.
+
+<P>
+
+<H2><A NAME="SECTION00012000000000000000">
+Is downloading the genome needed ?</A>
+</H2>
+If the user seeks to build a new segment tree index, the genome is required. However, for annotating coordinates/intervals and finding the closest TSS, only the chromosome index file is required.
+
+<P>
+
+<H2><A NAME="SECTION00013000000000000000">
+I already have the genome (chromosome files) for the species I wish to use, do I have to download it again ?</A>
+</H2>
+No, but make sure the genome was downloaded from UCSC, that you have all the files and that all the files were downloaded without errors. There are two options:
+
+<P>
+1) If you have write permission in the directory with the chromosomes, you can use the createChromosomeIndex.pl script to create an index using the following command :
+<BR>
+<BR> ./createChromosomeIndex.pl [directory with the chromosomes]/  <SPAN CLASS="MATH"><IMG
+ WIDTH="19" HEIGHT="35" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$&gt;$"></SPAN> [directory with the chromosomes]/index.txt
+
+<BR>
+Make sure you do not have any extra files besides all of the chromosome files in fasta format downloaded from UCSC in that directory. Then create a symbolic link for the directory in your Segtor directory (see quick start for more details) called ``chromosomes'' in the directory for the species you wish to use. (e.g. ln -s /usr/share/data/ucsc/hg19/ /home/user/.segtor/hg19/chromosomes/)
+
+<P>
+2)  If you do not have write permissions, create a directory in Segtor's directory (see quick start for more details) for the species you wish to use. Create a directory called ``chromosomes'' and create a symbolic links for each chromosomes files.  Run the command: 
+<BR>
+<BR>
+<P>
+./createChromosomeIndex.pl [Segtor's directory with the symlinks to chromosomes]/ <SPAN CLASS="MATH"><IMG
+ WIDTH="19" HEIGHT="35" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.png"
+ ALT="$&gt;$"></SPAN> [Segtor's directory with the symlinks to chromosomes]/index.txt
+
+<BR>
+<P>
+
+<H2><A NAME="SECTION00014000000000000000">
+Why is the output file empty ?</A>
+</H2>
+It is likely that no genes overlap the inputs you had. Make sure some of your inputs are within genes or increase the range. Make sure that the chromosome you are using has annotated genes. Also make sure that you are using the correct genome assembly since coordinates and chromosome names can vary greatly.
+
+<P>
+
+<H1><A NAME="SECTION00020000000000000000">
+Common problems</A>
+</H1>
+
+<H2><A NAME="SECTION00021000000000000000">
+Problem:</A>
+</H2> 
+The program stalls at "testing internet connection..."
+
+<H2><A NAME="SECTION00022000000000000000">
+Solution:</A>
+</H2> 
+Check to see if you have access to the internet. Check to see if you are behind a proxy and if so, enter the ip using the '-p' option
+
+<P>
+
+<H2><A NAME="SECTION00023000000000000000">
+Problem:</A>
+</H2> I get either:
+Unable to retrieve ftp://hgdownload.cse.ucsc.edu/goldenPath/sasda12/chromosomes/
+Status line 500 Server closed connection without sending any data back
+or 
+503 Bad Gateway
+or
+Downloading stalls
+
+<H2><A NAME="SECTION00024000000000000000">
+Solution:</A>
+</H2> 
+Make sure the organism exists on the UCSC Genome Browser. Make sure you have the correct code and the organism's genome exists in:
+
+<P>
+ftp://hgdownload.cse.ucsc.edu/goldenPath/[organism]/chromosomes/
+
+<P>
+
+<H2><A NAME="SECTION00025000000000000000">
+Problem:</A>
+</H2> 
+The genome downloads correctly but does not download the database files
+
+<H2><A NAME="SECTION00026000000000000000">
+Solution:</A>
+</H2> 
+Check to see if the database you wish to use exists in:
+
+<P>
+ftp://hgdownload.cse.ucsc.edu/goldenPath/[organism]/chromosomes/
+
+<P>
+
+<H2><A NAME="SECTION00027000000000000000">
+Problem:</A>
+</H2> 
+I know that my input coordinate is in a gene but Segtor does not detect it
+
+<H2><A NAME="SECTION00028000000000000000">
+Solution:</A>
+</H2> 
+Is it possible that either your gene was newly added/modified in the database and was not the index. Are you sure you used the correct assembly for the species ?  If you believe this is a bug, please contact us.
+
+<P>
+
+<H2><A NAME="SECTION00029000000000000000">
+Problem:</A>
+</H2> 
+My input coordinate is in a gene according to Segtor but I do not see that gene in the UCSC Genome Browser 
+
+<H2><A NAME="SECTION000210000000000000000">
+Solution:</A>
+</H2> 
+Segtor's indices were built using UCSC flat files. Genes/transcripts routinely get removed or added. Hence, it is possible that the gene was removed. If you build a new index and the gene is not present in the flat file yet Segtor detects it, please contact us.
+
+<P>
+
+<H2><A NAME="SECTION000211000000000000000">
+Problem:</A>
+</H2> 
+The program has problems upon building the data structure.
+
+<H2><A NAME="SECTION000212000000000000000">
+Solution:</A>
+</H2> 
+Perhaps there is a parsing error in the gene files, please email your command line to passetti[at]inca.gov.br
+
+<P>
+
+<H2><A NAME="SECTION000213000000000000000">
+Problem:</A>
+</H2> 
+Upon using ESTs, the program stalls
+
+<H2><A NAME="SECTION000214000000000000000">
+Solution:</A>
+</H2> 
+ESTs use a lot of RAM since there are a lot of ESTs especially for human builds. Try using a machine with more RAM. 
+
+<P>
+
+<H2><A NAME="SECTION000215000000000000000">
+Problem:</A>
+</H2> 
+The RAM footprint increases and reaches 100
+<H2><A NAME="SECTION000216000000000000000">
+Solution:</A>
+</H2> 
+Do not use the -n option to avoid having the per gene report or, if you need the report, breakdown your files into chunks and merge the results.
+
+<P>
+
+<H1><A NAME="SECTION00030000000000000000">
+For any other problem</A>
+</H1> 
+
+<P>
+please contact: passetti[at]inca.gov.br
+
+<P>
+
+<H1><A NAME="SECTION00040000000000000000">
+About this document ...</A>
+</H1>
+ <STRONG>FAQ for Segtor</STRONG><P>
+This document was generated using the
+<A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2008 (1.71)
+<P>
+Copyright &#169; 1993, 1994, 1995, 1996,
+Nikos Drakos, 
+Computer Based Learning Unit, University of Leeds.
+<BR>
+Copyright &#169; 1997, 1998, 1999,
+<A HREF="http://www.maths.mq.edu.au/~ross/">Ross Moore</A>, 
+Mathematics Department, Macquarie University, Sydney.
+<P>
+The command line arguments were: <BR>
+ <STRONG>latex2html</STRONG> <TT>-split 0 FAQ.tex</TT>
+<P>
+The translation was initiated by Gabriel Renaud on 2011-02-28
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="/usr/share/latex2html/icons/nx_grp_g.png"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Gabriel Renaud
+2011-02-28
+</ADDRESS>
+</BODY>
+</HTML>

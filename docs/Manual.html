@@ -1,0 +1,1636 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>User Guide for Segtor</TITLE>
+<META NAME="description" CONTENT="User Guide for Segtor">
+<META NAME="keywords" CONTENT="Manual">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="Manual.css">
+
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="/usr/share/latex2html/icons/nx_grp_g.png"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<P>
+<H1 ALIGN="CENTER">User Guide for Segtor</H1>
+<DIV CLASS="author_info">
+
+</DIV>
+<BR>
+
+<H2><A NAME="SECTION00100000000000000000">
+Contents</A>
+</H2>
+<!--Table of Contents-->
+
+<UL CLASS="TofC">
+<LI><A NAME="tex2html55"
+  HREF="Manual.html#SECTION00200000000000000000">Introduction</A>
+<LI><A NAME="tex2html56"
+  HREF="Manual.html#SECTION00300000000000000000">Command line</A>
+<UL>
+<LI><A NAME="tex2html57"
+  HREF="Manual.html#SECTION00310000000000000000">Modes</A>
+<UL>
+<LI><A NAME="tex2html58"
+  HREF="Manual.html#SECTION00311000000000000000">Mode 1 :Coordinates</A>
+<LI><A NAME="tex2html59"
+  HREF="Manual.html#SECTION00312000000000000000">Mode 2: Intervals</A>
+<LI><A NAME="tex2html60"
+  HREF="Manual.html#SECTION00313000000000000000">Mode 3: SNVs/SNPs</A>
+<LI><A NAME="tex2html61"
+  HREF="Manual.html#SECTION00314000000000000000">Mode 4: TSS</A>
+<LI><A NAME="tex2html62"
+  HREF="Manual.html#SECTION00315000000000000000">Mode 5: Insertions, deletions and translocations</A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html63"
+  HREF="Manual.html#SECTION00400000000000000000">Web Interface</A>
+<UL>
+<LI><A NAME="tex2html64"
+  HREF="Manual.html#SECTION00410000000000000000">Modes</A>
+<UL>
+<LI><A NAME="tex2html65"
+  HREF="Manual.html#SECTION00411000000000000000">Coordinate (coord)</A>
+<LI><A NAME="tex2html66"
+  HREF="Manual.html#SECTION00412000000000000000">Intervals (interval)</A>
+<LI><A NAME="tex2html67"
+  HREF="Manual.html#SECTION00413000000000000000">Single nucleotide variation (or polymorphism) (SNP)</A>
+<LI><A NAME="tex2html68"
+  HREF="Manual.html#SECTION00414000000000000000">Transcription start site (tss)</A>
+<LI><A NAME="tex2html69"
+  HREF="Manual.html#SECTION00415000000000000000">Insertion, deletions and translocations (INS/DEL/TRANS)</A>
+</UL>
+<LI><A NAME="tex2html70"
+  HREF="Manual.html#SECTION00420000000000000000">Available databases</A>
+</UL></UL>
+<!--End of Table of Contents-->
+<P>
+
+<H1><A NAME="SECTION00200000000000000000">
+Introduction</A>
+</H1>
+Segtor is a software written in Perl to:
+
+<OL>
+<LI>Determine the relative position of genomic coordinates and intervals with respect to genes
+</LI>
+<LI>Annotate single nucleotide variations with respect to genes
+</LI>
+<LI>Determine the closest transcription start site to various coordinates
+</LI>
+<LI>Determine the relative position of insertion, deletions and translocations
+</LI>
+</OL>
+Our software is designed for rapidly handling large datasets. We also designed a web interface for small queries for test purposes. See the quick start guide for installation instructions.
+
+<P>
+
+<H1><A NAME="SECTION00300000000000000000">
+Command line</A>
+</H1>
+
+<P>
+
+<H1><A NAME="SECTION00310000000000000000">
+Modes</A>
+</H1>
+
+<P>
+There are 5 available modes:
+
+<OL>
+<LI><B>Coordinates:</B> To determine the relative position of genomic coordinates to genes (e.g. in an exon, upstream of a gene).
+</LI>
+<LI><B>Intervals:</B>  To determine the relative position of intervals to genes (e.g. overlapping an intron, overlapping the 5' end of a gene).
+</LI>
+<LI><B>SNVs:</B> To determine the relative position of SNVs to genes and the impact of SNVs landing in exons. (e.g. within an intron, within a protein coding exon causing a non-synonymous mutation. 
+</LI>
+<LI><B>TSS:</B> To determine the closest transcription start site of a gene for a genomic coordinate indepedently of the relative position.
+</LI>
+<LI><B>Insertions/deletions/translotions:</B> To determine the relative position of insertions/deletions/translocations to genes and give a putative protein sequence for each site landing within coding exons.
+</LI>
+</OL>
+
+<P>
+The following sections describe each mode.
+
+<P>
+
+<H2><A NAME="SECTION00311000000000000000">
+Mode 1 :Coordinates</A>
+</H2>
+
+<H3><A NAME="SECTION00311100000000000000">
+Input format</A>
+</H3>
+The input format is:
+<PRE>
+  chromosome	coordinate	id
+</PRE>
+Example:
+<PRE>
+chr1	12393	coord1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, the <B>coordinate</B> must be the same as the one used on the UCSC Genome Browser (1-based) and the <B>id</B> must be unique for each line.
+
+<P>
+
+<H3><A NAME="SECTION00311200000000000000">
+Relevance of hits</A>
+</H3>
+The program will sort the results according to the relevance of the hits, here is the order used: 
+
+<OL>
+<LI>Within exons
+</LI>
+<LI>Within introns
+</LI>
+<LI>Upstream
+</LI>
+<LI>Downstream
+</LI>
+</OL>
+
+<P>
+
+<H3><A NAME="SECTION00311300000000000000">
+Output format</A>
+</H3>
+Results:
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>#INPUTID</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The unique identifier provided for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>CHR</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The chromosome for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>COORD</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The coordinate for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>TRANSCRIPT</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The transcripts that were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>GENE</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The gene for the transcript that was found</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>POSITION</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>INDEX</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Index of the exons/introns when a coordinate falls within an exon or intron</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>DISTANCE5P</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 5' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>DISTANCE3p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 3' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>PARTIAL</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the coordinates is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H3><A NAME="SECTION00311400000000000000">
+Output files and meaning</A>
+</H3>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>File name</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Information reported with respect to:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>Which inputs will reported ?</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Which genes will reported ?</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.all.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>all the transcripts, all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.single.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript per gene but report all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.best.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript for all genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.all.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>all the transcripts, all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.single.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript per gene but report all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.best.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript for all genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.none.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those without a hit to a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>no genes will be reported</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.exon.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those in exon</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.intron.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those in introns</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.upstrm.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those upstream of a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.dwnstrm.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those downstream of a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION00312000000000000000">
+Mode 2: Intervals</A>
+</H2>
+
+<H3><A NAME="SECTION00312100000000000000">
+Input format</A>
+</H3>
+The input format is:
+<PRE>
+  chromosome	coordinate1	coordinate2	id
+</PRE>
+Example:
+<PRE>
+chr9	230894	231123	interval1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, the <B>coordinate1</B> must be the same as the one used on the UCSC Genome Browser (1-based) and represent the start of the interval, <B>coordinate2</B> is the end coordinate which should be greater than <B>coordinate1</B> and the <B>id</B> must be unique for each line.
+
+<P>
+
+<H3><A NAME="SECTION00312200000000000000">
+Relevance of hits</A>
+</H3>
+The program will sort the results according to the relevance of the hits, here is the order used: 
+
+<P>
+
+<OL>
+<LI>Contained in transcript and totally contained in a single exon
+</LI>
+<LI>Contained in transcript and overlaps exonic and intronic regions
+</LI>
+<LI>Contained in transcript and totally contained in intronic region
+</LI>
+<LI>Range completely contains the transcript
+</LI>
+<LI>Overlaps 5' end and first exon only
+</LI>
+<LI>Overlaps 5' end and exons, introns
+</LI>
+<LI>Overlaps 3' end and last exon only
+</LI>
+<LI>Overlaps 3' end and exons, introns
+</LI>
+<LI>Upstream
+</LI>
+<LI>Downstream
+</LI>
+</OL>
+
+<H3><A NAME="SECTION00312300000000000000">
+Output format</A>
+</H3>
+Results:
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>#INPUTID</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The unique identifier provided for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>CHR</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The chromosome for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>COORD</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The coordinate for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>TRANSCRIPT</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The transcripts that were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>GENE</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The gene for the transcript that was found</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>POSITION</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>INDEXexons</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the exons that are overlapped by the interval</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>INDEXintrons</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the introns that are overlapped by the interval</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>PARTIAL</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the interval is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H3><A NAME="SECTION00312400000000000000">
+Output files and meaning</A>
+</H3>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>File name</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Information reported with respect to:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>Which inputs will reported ?</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Which genes will reported ?</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.all.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>all the transcripts, all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.single.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript per gene but report all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.best.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript for all genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.all.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>all the transcripts, all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.single.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript per gene but report all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.best.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript for all genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.none.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those without a hit to a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>no genes will be reported</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.exon.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those in exon</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.intron.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those in introns</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.upstrm.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those upstream of a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.dwnstrm.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those downstream of a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION00313000000000000000">
+Mode 3: SNVs/SNPs</A>
+</H2>
+
+<H3><A NAME="SECTION00313100000000000000">
+Input format</A>
+</H3>
+The input format is:
+<PRE>
+  chromosome	coordinate1	bpRef	bpRead	id
+</PRE>
+Example:
+<PRE>
+chrX	23094	A	C	snv1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, the <B>coordinate</B> must be the same as the one used on the UCSC Genome Browser (1-based), <B>bpRef</B> is the reference base pair must either be A,C,G,T, <B>bpRead</B> is the read base pair must either be A,C,G,T and the <B>id</B> must be unique for each line.
+
+<P>
+
+<H3><A NAME="SECTION00313200000000000000">
+Relevance of hits</A>
+</H3>
+The program will sort the results according to the relevance of the hits, here is the order used: 
+
+<P>
+
+<OL>
+<LI>SNVs falling within the coding region of exons for which the reading frames can be ascertained causing a change in amino acid (non-synonymous)
+</LI>
+<LI>SNVs falling within the coding region of exons for which the reading frames can be ascertained not causing a change in amino acid (synonymous)
+</LI>
+<LI>SNVs falling within the coding region of exons for which the reading frames cannot be ascertained
+</LI>
+<LI>SNVs falling within the non-coding region of exons
+</LI>
+<LI>SNVs falling within introns
+</LI>
+<LI>SNVs falling upstream
+</LI>
+<LI>SNVs falling downstream
+</LI>
+</OL>
+
+<H3><A NAME="SECTION00313300000000000000">
+Output format</A>
+</H3>
+Results: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>#INPUTID</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The unique identifier provided for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>CHR</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The chromosome for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>COORD</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The coordinate for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>TRANSCRIPT</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The transcripts that were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>GENE</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The gene for the transcript that was found</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>POSITION</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>INDEX</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Index of the exons/introns when a SNV falls within an exon or intron</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>DISTANCE5p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 5' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>DISTANCE3p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 3' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>PARTIAL</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the SNV is within range of the 5' or 3' end and the transcript only aligns partially to the genome, it can also contain ``potential splice disruption'' for SNVs landing in the first or last 2 bp of an intron, or ``untranslated 5'UTR'', ``untranslated 3'UTR'' or ``untranslated'' for those SNVs landing in the untranslated parts of an exon</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>CODONREF</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>DNA codon with the reference base pair.</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>CODONREAD</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>DNA codon with the read base pair.</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>AAREF</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Amino acid produced by the DNA codon with the reference base pair.</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>AAREAD</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Amino acid produced by the DNA codon with the read base pair.</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H3><A NAME="SECTION00313400000000000000">
+Output files and meaning</A>
+</H3>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>File name</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Information reported with respect to:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>Which inputs will be reported ?</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Which genes will be reported ?</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.all.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>all the transcripts, all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.single.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript per gene but report all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.best.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript for all genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.all.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>all the transcripts, all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.single.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript per gene but report all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.best.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pick the most relevant transcript for all genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.none.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those without a hit to a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>no genes will be reported</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.cde.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those in coding exons</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.ncde.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those in non-coding exons</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.syn.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those causing synonymous mutations</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.nsyn.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those causing non-synonymous mutations</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.exon.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those in exon</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.intron.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those in introns</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.upstrm.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those upstream of a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.dwnstrm.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those downstream of a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>pick one transcript per gene but report all the different genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.dbsnp.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Only information about dbSNP records matching input records (optional file)</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION00314000000000000000">
+Mode 4: TSS</A>
+</H2>
+
+<H3><A NAME="SECTION00314100000000000000">
+Input format</A>
+</H3>
+The input format is:
+<PRE>
+  chromosome	coordinate	id
+</PRE>
+Example:
+<PRE>
+chr19	903423	test1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, the <B>coordinate</B> must be the same as the one used on the UCSC Genome Browser (1-based) and the <B>id</B> must be unique for each line.
+
+<H3><A NAME="SECTION00314200000000000000">
+Output format</A>
+</H3>
+Results: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>#INPUTID</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The unique identifier provided for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>CHR</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The chromosome for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>COORD</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The coordinate for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>TRANSCRIPT</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The transcripts whose TSS was the closest to the input coordinate were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>GENE</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The gene for the transcript that was found</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>POSITION</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>DISTANCE5P</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 5' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>DISTANCE3p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 3' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>PARTIAL</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the coordinates is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H3><A NAME="SECTION00314300000000000000">
+Output files and meaning</A>
+</H3>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>File name</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Information reported with respect to:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>Which inputs will be reported ?</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Which genes will be reported ?</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>input.closest.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>All inputs for which a transcription start site was found</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>The gene corresponding to the transcription start site</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>input.none.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>All inputs lying on chromosomes for which there are no genes to report</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>no genes will be reported</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION00315000000000000000">
+Mode 5: Insertions, deletions and translocations</A>
+</H2>
+
+<H3><A NAME="SECTION00315100000000000000">
+Input format</A>
+</H3>
+The input format can either be:
+<PRE>
+  INS chromosome	coordinate	DNAsequence	id	
+  DEL	chromosome coordinate1	coordinate2	id
+  TRANS	 chromosome1	coordinate1	strand1	chromosome2	coordinate2	strand2	id
+</PRE>
+Example:
+<PRE>
+  INS chr7	902344	CAGT	ins1	
+  DEL	chr10 230984	230996	del1
+  TRANS	 chr9	324023	+	chr4	23135	-	trans1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, <B>coordinate</B>, <B>coordinate1</B> and <B>coordinate2</B> must be the same as the one used on the UCSC Genome Browser (1-based) and the <B>id</B> must be unique for each line.  <B>strand1</B> and  <B>strand2</B> are the strands indicating the which strand was paired the translocation. 
+
+<H3><A NAME="SECTION00315200000000000000">
+Output format</A>
+</H3>
+The 3 types of inputs are mixed together in the output. However, they do not always have the same number of columns.
+
+<P>
+Insertions: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>1</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The unique identifier provided for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>2</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The chromosome for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>3</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The coordinate for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>4</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The transcripts whose TSS was the closest to the input coordinate were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>5</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The gene for the transcript that was found</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>6</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>7</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 5' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>8</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 3' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>9</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the coordinates is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>10</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Coordinate of the insertion in the amino acid sequence</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>11</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The sequence without the insertion</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>12</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>A putative sequence with the insertion (does not take splicing and other events into account)</TD>
+</TR>
+</TABLE>
+
+<BR>
+Deletions: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>1</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The unique identifier provided for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>2</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The chromosome for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>3</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The start coordinate for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>4</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The end coordinate for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>5</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The transcripts whose TSS was the closest to the input coordinate were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>6</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The gene for the transcript that was found</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>7</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>8</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the exons that are overlapped by the interval</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>9</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the introns that are overlapped by the interval</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>10</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the interval is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>11</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The sequence without the deletion</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>12</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>A putative sequence with the deletion (does not take splicing and other events into account)</TD>
+</TR>
+</TABLE>
+
+<BR>
+Translocations 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>1</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The unique identifier provided for the input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>2</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The chromosome for the first input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>3</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The coordinate for the first input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>4</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The chromosome for the second input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>5</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The coordinate for the second input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>6</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The transcript found for the first input record (<B>DD</B> = different direction, <B>SD</B>=same direction)</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>7</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The gene found for the first input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>8</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The beginning of the protein sequence due to the first input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>9</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The transcript found for the second input record (<B>DD</B> = different direction, <B>SD</B>=same direction)</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>10</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The gene found for the second input record</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>11</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The beginning of the protein sequence due to the second input record</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H3><A NAME="SECTION00315300000000000000">
+Output files and meaning</A>
+</H3>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>File name</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Information reported with respect to:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>Which inputs will be reported ?</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Which genes will be reported ?</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.all.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>all the transcripts, all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].genes.all.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>Genes</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>all inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>all the transcripts, all the genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>[range].input.none.out</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=71>inputs</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=113>only those without a hit to a gene</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>no genes will be reported</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H1><A NAME="SECTION00400000000000000000">
+Web Interface</A>
+</H1>
+
+<P>
+
+<H1><A NAME="SECTION00410000000000000000">
+Modes</A>
+</H1>
+
+<H2><A NAME="SECTION00411000000000000000">
+Coordinate (coord)</A>
+</H2>
+This mode is to annotate genomic coordinates
+
+<H3><A NAME="SECTION00411100000000000000">
+Input format</A>
+</H3>
+The input format is:
+<PRE>
+  chromosome	coordinate	id
+</PRE>
+Example:
+<PRE>
+chr1	12393	coord1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, the <B>coordinate</B> must be the same as the one used on the UCSC Genome Browser (1-based) and the <B>id</B> must be unique for each line.
+
+<P>
+
+<H3><A NAME="SECTION00411200000000000000">
+Relevance of hits</A>
+</H3>
+The program will sort the results according to the relevance of the hits, here is the order used: 
+
+<OL>
+<LI>Within exons
+</LI>
+<LI>Within introns
+</LI>
+<LI>Upstream
+</LI>
+<LI>Downstream
+</LI>
+</OL>
+
+<P>
+
+<H3><A NAME="SECTION00411300000000000000">
+Output</A>
+</H3>
+Results:
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Transcript</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genes/transcripts that were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Position</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Index</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Index of the exons/introns when a coordinate falls within an exon or intron</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance5p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 5' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance3p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 3' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Partial</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the coordinates is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+</TABLE>
+
+<BR>
+Statistics: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Genome Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genome/assembly that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Database Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The database that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Range Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The range that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Database file:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The database files that was in the construction of the segment tree and the data at which they were downloaded</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Total number of sites:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Total number of coordinates in the input that were entered by the user</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sites upstream of genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of coordinates that are located upstream of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sites downstream of genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of coordinates that are located downstream of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sites within exons of genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of coordinates that are located within an exon of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sites within introns of genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of coordinates that are located within an intron of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Exons:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the exons for the "Sites within exons of genes"</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Introns:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the introns for the "Sites within introns of genes"</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pie Chart</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>A pie chart showing distribution of the coordinates</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00411400000000000000">
+Options</A>
+</H3>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Available option</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Effect</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Range</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>This will consider genes within the range specified by the user (default = 0 bp)</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION00412000000000000000">
+Intervals (interval)</A>
+</H2>
+This mode is to annotate genomic intervals 
+
+<H3><A NAME="SECTION00412100000000000000">
+Input format</A>
+</H3>
+The input format is:
+<PRE>
+  chromosome	coordinate1	coordinate2	id
+</PRE>
+Example:
+<PRE>
+chr9	230894	231123	interval1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, the <B>coordinate1</B> must be the same as the one used on the UCSC Genome Browser (1-based) and represent the start of the interval, <B>coordinate2</B> is the end coordinate which should be greater than <B>coordinate1</B> and the <B>id</B> must be unique for each line.
+
+<P>
+
+<H3><A NAME="SECTION00412200000000000000">
+Relevance of hits</A>
+</H3>
+The program will sort the results according to the relevance of the hits, here is the order used: 
+
+<P>
+
+<OL>
+<LI>Contained in transcript and totally contained in a single exon
+</LI>
+<LI>Contained in transcript and overlaps exonic and intronic regions
+</LI>
+<LI>Contained in transcript and totally contained in intronic region
+</LI>
+<LI>Range completely contains the transcript
+</LI>
+<LI>Overlaps 5' end and first exon only
+</LI>
+<LI>Overlaps 5' end and exons, introns
+</LI>
+<LI>Overlaps 3' end and last exon only
+</LI>
+<LI>Overlaps 3' end and exons, introns
+</LI>
+<LI>Upstream
+</LI>
+<LI>Downstream
+</LI>
+</OL>
+
+<P>
+
+<H3><A NAME="SECTION00412300000000000000">
+Output</A>
+</H3>
+Results:
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Partial</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the coordinates is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Exons#</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the exons that are overlapped by the interval</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Introns#</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the introns that are overlapped by the interval</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Position</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+</TABLE>
+
+<BR>
+Statistics: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Genome Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genome/assembly that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Database Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The database that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Range Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The range that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Database file:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The database files that was in the construction of the segment tree and the data at which they were downloaded</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Total number of sites:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Total number of coordinates in the input that were entered by the user</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals upstream :</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals that are located upstream of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals downstream:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals that are located downstream of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals in single exon:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals that are contained within a single exon</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals in exons/introns:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals spanning exonic and intronic regions</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals in single intron:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals that are contained within a single intron</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals spanning a gene:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals that totally span a gene</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals 5' end, first exon</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals that span the 5' end and the first exon only</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals 5' end, exons/introns</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals that span the 5' end and exonic and intronic regions</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals 3' end, last exon</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals that span the 3' end and the last exon only</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Intervals 3' end, exons/introns</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of intervals that span the 3' end and exonic and intronic regions</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Exons:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the exons for the "Sites within exons of genes"</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Introns:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the introns for the "Sites within introns of genes"</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pie Chart</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>A pie chart showing distribution of the coordinates</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00412400000000000000">
+Options</A>
+</H3>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Available option</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Effect</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Range</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>This will consider genes within the range specified by the user (default = 0 bp)</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION00413000000000000000">
+Single nucleotide variation (or polymorphism) (SNP)</A>
+</H2>
+This mode is to annotate genomic SNVs (or SNPs).
+
+<P>
+
+<H3><A NAME="SECTION00413100000000000000">
+Input format</A>
+</H3>
+The input format is:
+<PRE>
+  chromosome	coordinate1	bpRef	bpRead	id
+</PRE>
+Example:
+<PRE>
+chrX	23094	A	C	snv1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, the <B>coordinate</B> must be the same as the one used on the UCSC Genome Browser (1-based), <B>bpRef</B> is the reference base pair must either be A,C,G,T, <B>bpRead</B> is the read base pair must either be A,C,G,T and the <B>id</B> must be unique for each line.
+
+<P>
+
+<H3><A NAME="SECTION00413200000000000000">
+Relevance of hits</A>
+</H3>
+The program will sort the results according to the relevance of the hits, here is the order used: 
+
+<P>
+
+<OL>
+<LI>SNVs falling within the coding region of exons for which the reading frames can be ascertained causing a change in amino acid (non-synonymous)
+</LI>
+<LI>SNVs falling within the coding region of exons for which the reading frames can be ascertained not causing a change in amino acid (synonymous)
+</LI>
+<LI>SNVs falling within the coding region of exons for which the reading frames cannot be ascertained
+</LI>
+<LI>SNVs falling within the non-coding region of exons
+</LI>
+<LI>SNVs falling within introns
+</LI>
+<LI>SNVs falling upstream
+</LI>
+<LI>SNVs falling downstream
+</LI>
+</OL>
+
+<H3><A NAME="SECTION00413300000000000000">
+Output</A>
+</H3>
+In the online interface, non-synonymous mutations are highlighted in red.
+
+<BR>
+Results: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Transcript</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genes/transcripts that were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Position</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Index</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Index of the exons/introns when a SNP falls within an exon or intron</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance5p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 5' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance3p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 3' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Partial</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the SNP is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Codon Reference</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>DNA codon with the reference base pair.</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Codon Read</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>DNA codon with the read base pair.</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>AA Reference</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Amino acid produced by the DNA codon with the reference base pair.</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>AA Read</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Amino acid produced by the DNA codon with the read base pair.</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Comment</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Comments regarding the annotation</TD>
+</TR>
+</TABLE>
+
+<BR>
+Statistics:
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Genome Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genome/assembly that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Database Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The database that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Range Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The range that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Database file:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The database files that was in the construction of the segment tree and the data at which they were downloaded</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Total number of sites:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Total number of SNPs in the input that were entered by the user</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sites upstream of genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs that are located upstream of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sites downstream of genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs that are located downstream of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sites within exons of genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs that are located within an exon of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sites within introns of genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs that are located within an intron of their respective most relevant transcript</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Exons:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the exons for the "Sites within exons of genes"</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Introns:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The index of the introns for the "Sites within introns of genes"</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Site hitting reliable genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs hitting genes for which the reading frames can be established with certainty</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Site hitting unreliable genes:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs hitting genes for which the reading frames cannot be established with certainty</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Site hitting coding exons:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs located within protein coding regions of exons</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Site hitting non-coding exons:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs located within exons but outside of a protein coding region</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Site causing non-synonymous mutations:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs in coding exons causing a change in the produced amino acid sequence</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Site causing non-synonymous mutations:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of SNPs in coding exons not causing a change in the produced amino acid sequence</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Pie Chart</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>A pie chart showing distribution of the SNPs</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H3><A NAME="SECTION00413400000000000000">
+Options</A>
+</H3>
+
+<P>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Available option</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Effect</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Range</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>This will consider genes within the range specified by the user (default = 0 bp)</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Produce AAseq?</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>If checked, it will report the 2 amino-acid sequences, one using the reference base pair and the other, using read base pair</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>No reference base pair</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Check this if you do not want to specify the reference base pair, USE AT YOUR OWN RISK</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION00414000000000000000">
+Transcription start site (tss)</A>
+</H2>
+This mode is to determine the closest transcription start site. 
+<BR>
+<H3><A NAME="SECTION00414100000000000000">
+Input format</A>
+</H3>
+The input format is:
+<PRE>
+  chromosome	coordinate	id
+</PRE>
+Example:
+<PRE>
+chr19	903423	test1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, the <B>coordinate</B> must be the same as the one used on the UCSC Genome Browser (1-based) and the <B>id</B> must be unique for each line.
+
+<P>
+
+<H3><A NAME="SECTION00414200000000000000">
+Output</A>
+</H3>
+Results: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Transcript</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genes/transcripts whose TSS was closest to each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Position</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Index</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Index of the exons/introns when a coordinate falls within an exon or intron</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance5p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 5' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance3p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 3' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Partial</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the coordinates is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+</TABLE>
+
+<BR>
+Statistics: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Genome Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genome/assembly that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Database Used:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The database that was used</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Database file:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The database files that was in the construction of the segment tree and the data at which they were downloaded</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Chart:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>This represents the number of inputs that can be found on each side on each side of the TSS, the number of bins and relative size of bins in the chart can be changed upon launching Segtor. The graph can be saved in jpg or png in various resolution.</TD>
+</TR>
+</TABLE>
+<H3><A NAME="SECTION00414300000000000000">
+Options</A>
+</H3>
+This mode produces a bar chart showing the distribution of the sites around transcription start sites, here are the options:
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Available option</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Effect</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>bins</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of bars to create on either side of the TSS</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Base pair per bin</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Number of base pairs that a bin represents</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H2><A NAME="SECTION00415000000000000000">
+Insertion, deletions and translocations (INS/DEL/TRANS)</A>
+</H2>
+This mode is to annotate insertion, deletions and translocations 
+
+<P>
+
+<H3><A NAME="SECTION00415100000000000000">
+Input format</A>
+</H3>
+The input format can either be:
+<PRE>
+  INS chromosome	coordinate	DNAsequence	id	
+  DEL	chromosome coordinate1	coordinate2	id
+  TRANS	 chromosome1	coordinate1	strand1	chromosome2	coordinate2	strand2	id
+</PRE>
+Example:
+<PRE>
+  INS chr7	902344	CAGT	ins1	
+  DEL	chr10 230984	230996	del1
+  TRANS	 chr9	324023	+	chr4	23135	-	trans1
+</PRE>
+
+<P>
+The <B>chromosome</B> must be the same as the one used on the UCSC Genome Browser, <B>coordinate</B>, <B>coordinate1</B> and <B>coordinate2</B> must be the same as the one used on the UCSC Genome Browser (1-based) and the <B>id</B> must be unique for each line.  <B>strand1</B> and  <B>strand2</B> are the strands indicating the which strand was paired the translocation. 
+
+<H3><A NAME="SECTION00415200000000000000">
+Output</A>
+</H3>
+Insertions: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Transcript</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genes/transcripts that were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Position</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each input with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Index</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Index of the exons/introns when an insertion falls within an exon or intron</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance5p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 5' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance3p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 3' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Partial</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the insertion is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>CoordAA</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Coordinate of the insertion in the amino acid sequence</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Comment</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Comments regarding the annotation</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sequence Reference:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The sequence without the insertion</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sequence Read:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>A putative sequence with the insertion (does not take splicing and other events into account)</TD>
+</TR>
+</TABLE>
+
+<BR>
+Deletions: 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Transcript</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genes/transcripts that were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Position</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position of each insertion with respect to the genes/transcripts</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Index</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Index of the exons/introns when an insertion falls within an exon or intron</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance5p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 5' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Distance3p</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Distance to the 3' end</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Partial</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>When the insertion is within range of the 5' or 3' end and the transcript only aligns partially to the genome</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sequence Reference:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The sequence without the deletion</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sequence Read:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>A putative sequence with the deletion (does not take splicing and other events into account)</TD>
+</TR>
+</TABLE>
+
+<BR>
+Translocations 
+<BR><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Field</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Meaning</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Transcript</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The genes/transcripts that were found for each input</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Position</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The relative position in terms of strand of the translocation with respect to the genes/transcripts, may have 2 lines for each input if the translocation fuses 2 genes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Sequence:</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>The sequence produced by either truncating or fusing genes due to a translocation</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H3><A NAME="SECTION00415300000000000000">
+Options</A>
+</H3>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Available option</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>Effect</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Range</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312>This will consider genes within the range specified by the user (default = 0 bp)</TD>
+</TR>
+</TABLE>
+
+<P>
+
+<H1><A NAME="SECTION00420000000000000000">
+Available databases</A>
+</H1>
+To set the database, first select the species you want by selecting the clade (mammal, verterbrate, etc) the species (human, chicken, etc) and the assembly for the given species (Human Feb. 2009 (GRCh37/hg19) , Human Mar. 2006 (NCBI36/hg18)). Finally, select the database (NCBI RefSeq, Ensembl Genes, etc). Please see the references for details on each database. 
+
+<P>
+
+<H1><A NAME="SECTION00500000000000000000">
+About this document ...</A>
+</H1>
+ <STRONG>User Guide for Segtor</STRONG><P>
+This document was generated using the
+<A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2008 (1.71)
+<P>
+Copyright &#169; 1993, 1994, 1995, 1996,
+Nikos Drakos, 
+Computer Based Learning Unit, University of Leeds.
+<BR>
+Copyright &#169; 1997, 1998, 1999,
+<A HREF="http://www.maths.mq.edu.au/~ross/">Ross Moore</A>, 
+Mathematics Department, Macquarie University, Sydney.
+<P>
+The command line arguments were: <BR>
+ <STRONG>latex2html</STRONG> <TT>-split 0 Manual.tex</TT>
+<P>
+The translation was initiated by Gabriel Renaud on 2011-02-28
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="/usr/share/latex2html/icons/nx_grp_g.png"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Gabriel Renaud
+2011-02-28
+</ADDRESS>
+</BODY>
+</HTML>

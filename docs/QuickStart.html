@@ -1,0 +1,836 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Quick start</TITLE>
+<META NAME="description" CONTENT="Quick start">
+<META NAME="keywords" CONTENT="QuickStart">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="QuickStart.css">
+
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="/usr/share/latex2html/icons/nx_grp_g.png"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<P>
+<H1 ALIGN="CENTER">Quick start</H1>
+<DIV CLASS="author_info">
+
+</DIV>
+
+<P>
+
+<H1><A NAME="SECTION00010000000000000000">
+Installation</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00011000000000000000">
+Requirements</A>
+</H2>                                                                                                                                 
+Segtor requires the Perl interpreter, a C++ compiler and the following Perl modules:
+
+<DL COMPACT>
+<DT>-  
+<DD>Cwd 
+<DT>-  
+<DD>Data::Dumper 
+<DT>-  
+<DD>File::stat 
+<DT>-  
+<DD>File::Basename 
+<DT>-  
+<DD>Getopt::Std 
+<DT>-  
+<DD>List::Util 
+<DT>-  
+<DD>LWP 
+<DT>-  
+<DD>POSIX 
+<DT>-  
+<DD>Storable 
+<DT>-  
+<DD>Time::Local 
+<DT>-  
+<DD>Time::HiRes
+    
+</DD>
+</DL> 
+
+<P>
+
+<H2><A NAME="SECTION00012000000000000000">
+Installation</A>
+</H2>                       
+
+<P>
+To install this program type the following:
+<BR>
+<IMG
+ WIDTH="447" HEIGHT="87" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="\begin{lstlisting}
+cd seq-substring
+gcc -O3 -o seq-substring seq-substring.c
+cd ..
+chmod u+x Segtor/main.pl
+\end{lstlisting}">
+<BR>
+
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00020000000000000000">
+Running Segtor</A>
+</H1>      
+
+<P>
+Segtor requires two files to run:
+
+<OL>
+<LI>An index detailing the available files and chromosome names for the given genome assembly.
+</LI>
+<LI>A compressed segment tree for the given database and genome assembly.
+</LI>
+</OL>
+
+<P>
+The compressed segment trees are loaded in the RAM to annotate the coordinates. Please remember that there are 4 types of indices:
+
+<OL>
+<LI>Index files with a segment trees without the genomic sequence (with a . treedat suffix) for annotating coordinates and intervals.
+</LI>
+<LI>Index files with a segment trees with the genomic sequence( with a . treesnvdat suffix) for annotating SNV, insertions, deletions and translocations. Larger than the previous one.
+</LI>
+<LI>Index files with a sorted array of the tss (with a .tssdat suffix) for detecting the closest TSS
+</LI>
+<LI>Index files with a hash of the dbSNP (with a .dbsnp) suffix for detecting existing SNP in the dbSNP
+</LI>
+</OL>                                                                                                                                                        
+The user has 2 options to get the files to run Segtor, either :
+
+<UL>
+<LI>Use the ones available on our website. See Section <A HREF="#sec:prebuilt">2.1</A>.
+</LI>
+<LI>Build their own. This builds both types of indices automatically. See section <A HREF="#sec:build">2.2</A>.
+</LI>
+</UL>
+
+<P>
+The following sections provides instructions for both. Bear in mind that Segtor requires a directory on the local disk to store the index files. By default, Segtor stores its data in the user's home directory in .segtor/ but it can change it using -c option. Some input samples can be found in the Segtor/sampleData/ directory. 
+
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00021000000000000000"></A>            
+<A NAME="sec:prebuilt"></A>
+<BR>
+Using a pre-built index file
+</H2>
+As of now, we only provide indices that work on a Intel x86_64 architecture. If you use a different processor, please refer to section <A NAME="sec:build"></A> to learn how to build your own indices for a different CPU architecture. After having downloaded the files, please remember to unzip them. Segtor requires 2 files to run:
+
+<OL>
+<LI>A file containing the list of files for the given assembly and the chromosomes contained in the files. This file is available on Segtor's website. 
+</LI>
+<LI>A segment tree index file. Pre-build index files for a given genome assemblies can be downloaded from Segtor's website. 
+</LI>
+</OL>
+
+<P>
+Segtor needs a directory to store the indices. By default, Segtor will look in the home directory and we recommend to store the files there. However, if the user has size quotas or wish to share Segtor between many users of a system, the indices can be stored elsewhere but must be specified with the -c option. To create Segtor's directory in the default location, the user foobar with /home/foobar/ as home directory will create the following directory:
+
+<P>
+<BR>
+<IMG
+ WIDTH="232" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.png"
+ ALT="\begin{lstlisting}
+/home/foobar/.segtor/
+\end{lstlisting}">
+<BR> 
+
+<P>
+In your that directory, create a directory using the nomenclature used on the UCSC Genome Browser for the given species you wish to use and remember to use the correct case. (e.g. hg19 for the Feb. 2009 human genome). So the user "foobar" will create the directory:
+
+<P>
+<BR>
+<IMG
+ WIDTH="288" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="\begin{lstlisting}
+/home/foobar/.segtor/hg19/
+\end{lstlisting}">
+<BR> 
+
+<P>
+Remember that the base location of this directory can be changed using the -c option. 
+
+<P>
+Within that directory, create a directory "chromosomes" and another called "structures". Store the chromosome index file (normally index.txt) in:
+
+<P>
+<BR>
+<IMG
+ WIDTH="423" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img4.png"
+ ALT="\begin{lstlisting}
+/home/foobar/.segtor/hg19/chromosomes/
+\end{lstlisting}">
+<BR>
+
+<P>
+and store the segment tree index (the file ending either in .treedat, .tssdat, .treesnpdat) in:
+<BR>
+<IMG
+ WIDTH="412" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img5.png"
+ ALT="\begin{lstlisting}
+/home/foobar/.segtor/hg19/structures/
+\end{lstlisting}">
+<BR>
+
+<P>
+Once you have both files in the proper directories, you should be able to run Segtor. Jump to Section <A HREF="#sec:running">2.3</A> for instructions.
+
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00022000000000000000"></A>            
+<A NAME="sec:build"></A>
+<BR>
+Building your own index file
+</H2>
+This section is for user who seeks to build their own index files for a given species and database. This is the best option to use the most recent gene information or a new genome assembly. Before you proceed, make sure that:
+
+<P>
+
+<OL>
+<LI>Make sure you are connected to the internet and the velocity is suitable for downloading data.
+</LI>
+<LI>The genome assembly you seek is available on the UCSC Genome Browser FTP site and you have the correct species code (case sensitive). Verify by going to:  ftp://hgdownload.cse.ucsc.edu/goldenPath/
+</LI>
+<LI>The gene database genome assembly you seek is available for the genome assembly your are planning to use on the UCSC Genome Browser FTP site. Verify by going to:  ftp://hgdownload.cse.ucsc.edu/goldenPath/
+</LI>
+<LI>Segtor needs the genomic sequence and will download the entire genome plus the database file you seek to use. Please make sure you enough disk space. By default Segtor stores its data in your home directory in .segtor/ but you can change it using -c option.
+</LI>
+</OL>
+
+<P>
+Alternatively, if you already have existing psl or bed files describing the features you want to use as custom databases, please refer to section <A HREF="#sec:custombed">2.2.2</A>.
+
+<P>
+
+<H3><A NAME="SECTION00022100000000000000">
+Examples of creating indices</A>
+</H3>
+
+<P>
+To create an index for Human hg19 with ests for coordinates
+<BR>
+<IMG
+ WIDTH="364" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img6.png"
+ ALT="\begin{lstlisting}
+./main.pl -s hg19 -m 1 -d ests -o
+\end{lstlisting}">
+<BR>  
+
+<P>
+To create an index for Mouse mm9 with knowngene for intervals and do not promp for download
+<BR>
+<IMG
+ WIDTH="443" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.png"
+ ALT="\begin{lstlisting}
+./main.pl -s mm9 -m 2 -d knowngene -o -y
+\end{lstlisting}">
+<BR>  
+
+<P>
+To create an index for Rat rn4 with ensembl for SNVs using proxy http://123.58.13.21:34
+<BR>
+<IMG
+ WIDTH="475" HEIGHT="42" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="\begin{lstlisting}
+./main.pl -s rn4 -m 3 -d ensembl -o -p http://123.58.13.21:34
+\end{lstlisting}">
+<BR>  
+
+<P>
+To create an index for Human hg18 with ensembl for SNVs and build an index for dbSNP and use /foo/bar to store the data
+<BR>
+<IMG
+ WIDTH="532" HEIGHT="37" ALIGN="BOTTOM" BORDER="0"
+ SRC="img9.png"
+ ALT="\begin{lstlisting}
+./main.pl -s hg18 -m 3 -d ensembl -o -b -c /foo/bar
+\end{lstlisting}">
+<BR>  
+
+<P>
+To create an index for Chimp panTro2 with refSeq for detecting the closest TSS 
+<BR>
+<IMG
+ WIDTH="420" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img10.png"
+ ALT="\begin{lstlisting}
+./main.pl -s panTro2 -m 4 -d refseq -o
+\end{lstlisting}">
+<BR>  
+
+<P>
+To create an index for Zebrafish danRer6 with refSeq for annotating indels 
+<BR>
+<IMG
+ WIDTH="420" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.png"
+ ALT="\begin{lstlisting}
+./main.pl -s danRer6 -m 5 -d refseq -o
+\end{lstlisting}">
+<BR>
+Once the index has been created for a given species/assembly/annotation mode, Segtor can be run.
+
+<P>
+
+<H3><A NAME="SECTION00022200000000000000"></A>
+<A NAME="sec:custombed"></A>
+<BR>
+Creating custom databases using existing psl or bed files
+</H3>
+To create a custom database with one or many psl or bed files describing the features, the following command :
+
+<P>
+<BR>
+<IMG
+ WIDTH="1089" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img12.png"
+ ALT="\begin{lstlisting}
+./main.pl -s [species] -m [mode] -d [name of dabase] -o -e [comma-separated list of psl/bed files]
+\end{lstlisting}">
+<BR>
+
+<P>
+Please note that the only modes that are available for this are 1 and 2. 
+<BR>
+For instance, to build a custom database called ``ncrna'' using the files ``ncrna1.psl'' and ``ncrna2.psl'' on hg19, run:
+<BR>
+<IMG
+ WIDTH="541" HEIGHT="41" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.png"
+ ALT="\begin{lstlisting}
+./main.pl -s hg19 -m 1 -d ncrna -o -e ncrna1.psl,ncrna2.psl
+\end{lstlisting}">
+<BR>
+The ``ncrna'' will be available for mode 1 and 2.
+<BR>
+<P>
+
+<H2><A NAME="SECTION00023000000000000000"></A>            
+<A NAME="sec:running"></A>
+<BR>
+Running from the command line
+</H2>
+
+<P>
+To run Segtor, make sure main.pl is executable and run:
+<BR>
+<IMG
+ WIDTH="548" HEIGHT="60" ALIGN="BOTTOM" BORDER="0"
+ SRC="img14.png"
+ ALT="\begin{lstlisting}
+usage:
+./main.pl -s [species code] -m [mode] -f [file] -d [database]
+\end{lstlisting}">
+<BR>  
+
+<P>
+Here are the options: 
+
+<P>
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL"> option </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> parameter </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> effect </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" COLSPAN=4><SMALL CLASS="SMALL">
+
+<SPAN>Mandatory parameters</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+</SMALL></TD>
+<TD ALIGN="LEFT" COLSPAN=3><SMALL CLASS="SMALL"> <SPAN>Species code</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+ </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">	-s </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> [species code] </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Code for species used by UCSC (e.g. hg19) </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+</SMALL></TD>
+<TD ALIGN="LEFT" COLSPAN=3><SMALL CLASS="SMALL"> <SPAN>Annotation mode</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+ </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">     -m </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> [mode]   </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Annotation mode to use (e.g. -m 1) </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+ </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL">  1 Coordinate mode </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+ </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL">  2 Interval mode </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+ </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL">  3 SNVs </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+ </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL">  4 Find closest TSS </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+ </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL">    </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL">  5 InDels/Translocations </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+</SMALL></TD>
+<TD ALIGN="LEFT" COLSPAN=3><SMALL CLASS="SMALL"> <SPAN>Input file</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+</SMALL></TD>
+<TD ALIGN="LEFT" COLSPAN=3><SMALL CLASS="SMALL"> <SPAN>Specify either:</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-f </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> [file] </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Path to the file to annotate </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" COLSPAN=3><SMALL CLASS="SMALL"> <SPAN>or</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-l </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> [file of list of files] </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> File the full path of the files to annotate </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+</SMALL></TD>
+<TD ALIGN="LEFT" COLSPAN=3><SMALL CLASS="SMALL"> <SPAN>Gene database to use</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-d </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> [database to use] </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> The name of the database to use ex: </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		 </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL">  </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> -d ests  ESTs (mode 1,2 and 4 only) </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		 </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL">  </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> -d knowngene UCSC Known Genes (mode 1,2 and 4 only) </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		 </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL">  </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> -d refseq The annotation will be based on refSeqs </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		 </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL">  </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> -d ensembl The annotation will be based on Ensembl Genes </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" COLSPAN=4><SMALL CLASS="SMALL"> 
+
+<SPAN>Parameters with default values</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-c </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> [directory] </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Use this directory to store indices and download the chromosomes/database files (default: $HOME/.segtor/)</SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-r </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> [range] </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Range(s) (for -m 1,2,3 only) (default: 0) in base pairs to use to annotate coordinates -r "1000,5000" </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" COLSPAN=4><SMALL CLASS="SMALL"> 
+
+<SPAN>Optional parameters</SPAN> </SMALL></TD>
+</TR>
+<TR><TD></TD>
+<TD ALIGN="LEFT" COLSPAN=3><SMALL CLASS="SMALL"> <SPAN>Annotation options</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-b </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Check dbSNP for existing snps (for -m 3 only, requires a large RAM) </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-a </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Produce amino acid sequence (for -m 3 only, triggered by default for -m 5) </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-i </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Do not check the reference base pair </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-n </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Report inputs in terms of genes (genes.out file)  </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-g </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> bins:size </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> for mode 4, with "n:m", report n bins of m base pairs each (ex: -g 10:1000 will create 10 bins of 1kb each side of a tss) </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-x </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> do not produce XML output files, used to save space </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-t </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> produce only a part of the total output (all.out), triggers -x </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-z </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> only produce stats </SMALL></TD>
+</TR>
+<TR><TD></TD>
+<TD ALIGN="LEFT" COLSPAN=3><SMALL CLASS="SMALL"> <SPAN>Index building options</SPAN> </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-o </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Build the index files for the given species/database/mode (no annotation) </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-e </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> [files] </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> When using -o, specify a comma-separated list of files in psl or bed (with strand) format (from the UCSC Table Browser for example) to create the segment tree </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-b </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Download dbSNP and build index for it (for -m 3 only) </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-y </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> none </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> Do not prompt prior to downloading the chromosomes/database files </SMALL></TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=57><SMALL CLASS="SMALL"> 
+</SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=28><SMALL CLASS="SMALL">		-p </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=99><SMALL CLASS="SMALL"> [proxy server] </SMALL></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=312><SMALL CLASS="SMALL"> FTP proxy server to use (ex: http://127.0.0.1:21) </SMALL></TD>
+</TR>
+</TABLE>
+<P>
+
+<H3><A NAME="SECTION00023100000000000000">
+Examples of command line</A>
+</H3>
+<P>
+<SMALL CLASS="SMALL">To annotate coordinates for Human hg19 with ests at range 0
+<BR>
+<IMG
+ WIDTH="543" HEIGHT="37" ALIGN="BOTTOM" BORDER="0"
+ SRC="img15.png"
+ ALT="\begin{lstlisting}
+./main.pl -s hg19 -m 1 -d ests -f /path/to/input/file
+\end{lstlisting}">
+<BR>  
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">To annotate intervals for Mouse mm9 with knowngene using a list of files at range 0
+<BR>
+<IMG
+ WIDTH="521" HEIGHT="42" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.png"
+ ALT="\begin{lstlisting}
+./main.pl -s mm9 -m 2 -d knowngene -l /path/to/fileOf/files
+\end{lstlisting}">
+<BR>  
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">To annotate SNVs for Rat rn4 with ensembl for SNVs at ranges 1kb and 5kb and produce the mutated amino acid sequence:
+<BR>
+<IMG
+ WIDTH="498" HEIGHT="42" ALIGN="BOTTOM" BORDER="0"
+ SRC="img17.png"
+ ALT="\begin{lstlisting}
+./main.pl -s rn4 -m 3 -d ensembl -f /path/to/input/file -r ''1000,5000'' -a
+\end{lstlisting}">
+<BR>  
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">To annotate SNVs for Human hg18 with ensembl for SNVs and check dbSNP for existing SNPs and use /foo/bar to retrieve the indices
+<BR>
+<IMG
+ WIDTH="510" HEIGHT="42" ALIGN="BOTTOM" BORDER="0"
+ SRC="img18.png"
+ ALT="\begin{lstlisting}
+./main.pl -s hg18 -m 3 -d ensembl -f /path/to/input/file -b -c /foo/bar
+\end{lstlisting}">
+<BR>  
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">To detect the closest TSS for Chimp panTro2 with refSeq and bin results into 5 bins of 10kb each
+<BR>
+<IMG
+ WIDTH="532" HEIGHT="42" ALIGN="BOTTOM" BORDER="0"
+ SRC="img19.png"
+ ALT="\begin{lstlisting}
+./main.pl -s panTro2 -m 4 -d refseq -f /path/to/input/file -g ''5:10000''
+\end{lstlisting}">
+<BR>  
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">To annotate indels for Zebrafish danRer6 with refSeq and suppress the gene.out file
+<BR>
+<IMG
+ WIDTH="532" HEIGHT="42" ALIGN="BOTTOM" BORDER="0"
+ SRC="img20.png"
+ ALT="\begin{lstlisting}
+./main.pl -s danRer6 -m 5 -d refseq -f /path/to/input/file -n
+\end{lstlisting}">
+<BR>  
+</SMALL>
+<P>
+
+<H3><A NAME="SECTION00023200000000000000">
+Input format line</A>
+</H3>
+<P>
+<SMALL CLASS="SMALL">Mode 1, coordinate annotation: 
+<BR>
+<BR>
+<IMG
+ WIDTH="355" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img21.png"
+ ALT="\begin{lstlisting}
+chromosome coordinate id
+\end{lstlisting}">
+<BR>
+Example:
+<BR>
+<IMG
+ WIDTH="241" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.png"
+ ALT="\begin{lstlisting}
+chr1 12393 coord1
+\end{lstlisting}">
+<BR>
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">Mode 2, interval annotation: 
+<BR>
+<BR>
+<IMG
+ WIDTH="455" HEIGHT="36" ALIGN="BOTTOM" BORDER="0"
+ SRC="img23.png"
+ ALT="\begin{lstlisting}
+chromosome coordinate1 coordinate2 id
+\end{lstlisting}">
+<BR>
+Example:
+<BR>
+<IMG
+ WIDTH="363" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img24.png"
+ ALT="\begin{lstlisting}
+chr9 230894 231123 interval1
+\end{lstlisting}">
+<BR>
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">Mode 3, SNV annotation: 
+<BR>
+<BR>
+<IMG
+ WIDTH="491" HEIGHT="36" ALIGN="BOTTOM" BORDER="0"
+ SRC="img25.png"
+ ALT="\begin{lstlisting}
+chromosome coordinate1 bpRef bpRead id
+\end{lstlisting}">
+<BR>
+Example:
+<BR>
+<IMG
+ WIDTH="399" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img26.png"
+ ALT="\begin{lstlisting}
+chrX 23094 A C snv1
+\end{lstlisting}">
+<BR>
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">Mode 4, closest TSS: 
+<BR>
+<BR>
+<IMG
+ WIDTH="355" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img21.png"
+ ALT="\begin{lstlisting}
+chromosome coordinate id
+\end{lstlisting}">
+<BR>
+Example:
+<BR>
+<IMG
+ WIDTH="229" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img27.png"
+ ALT="\begin{lstlisting}
+chr19 903423 test1
+\end{lstlisting}">
+<BR>
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">Mode 5, indels/translocations: 
+<BR>
+<BR>
+<IMG
+ WIDTH="503" HEIGHT="128" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="\begin{lstlisting}
+INS chromosome coordinate DNAsequence id
+DEL chromosome co...
+...mosome1 coordinate1 strand1 chromosome2 coordinate2 strand2 id
+\end{lstlisting}">
+<BR>
+Example:
+<BR>
+<IMG
+ WIDTH="529" HEIGHT="83" ALIGN="BOTTOM" BORDER="0"
+ SRC="img29.png"
+ ALT="\begin{lstlisting}
+INS chr7 902344 CAGT ins1
+DEL chr10 230984 230996 del1
+TRANS chr9 324023 + chr4 23135 - trans1
+\end{lstlisting}">
+<BR>
+</SMALL>
+<P>
+<SMALL CLASS="SMALL">A script to convert from BAM, paired-end BAM, BED, snvmix and varscan to Segtor's native format can be found in the Segtor/scripts/ directory.
+</SMALL>
+<P>
+
+<H1><A NAME="SECTION00030000000000000000">
+About this document ...</A>
+</H1><SMALL CLASS="SMALL">
+ </SMALL><STRONG>Quick start</STRONG><P>
+This document was generated using the
+<A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2008 (1.71)
+<P>
+Copyright &#169; 1993, 1994, 1995, 1996,
+Nikos Drakos, 
+Computer Based Learning Unit, University of Leeds.
+<BR>
+Copyright &#169; 1997, 1998, 1999,
+<A HREF="http://www.maths.mq.edu.au/~ross/">Ross Moore</A>, 
+Mathematics Department, Macquarie University, Sydney.
+<P>
+The command line arguments were: <BR>
+ <STRONG>latex2html</STRONG> <TT>-split 0 QuickStart.tex</TT>
+<P>
+The translation was initiated by Gabriel Renaud on 2011-02-28
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="/usr/share/latex2html/icons/nx_grp_g.png"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.png"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.png">   
+<BR></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Gabriel Renaud
+2011-02-28
+</ADDRESS>
+</BODY>
+</HTML>

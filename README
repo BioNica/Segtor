@@ -1,0 +1,51 @@
+Segtor 
+===================
+
+Segtor is a software written in Perl to:
+
+   1. Determine the relative position of genomic coordinates and intervals with respect to genes
+   2. Annotate single nucleotide variations with respect to genes
+   3. Determine the closest transcription start site to various coordinates
+   4. Determine the relative position of insertion, deletions and translocations
+
+Please refer to the QuickStart guide in the docs/ directory for installation instructions and usage. 
+Please refer the Manual for detailed information regarding the meaning of different output files. 
+See frequently asked questions and common problems in the FAQ in docs
+
+ 
+
+COPYRIGHT AND LICENSE
+
+This software and all the data therein were developed by the 
+Bioinformatics Unit (Laboratorio de 
+Bioinformatica e Biologia Computational (LBBC)) of the Brazilian 
+National Cancer Institute (Instituto Nacional de Cancer (INCA)) 
+in Rio de Janeiro, RJ, Brazil. The INCA is part of the Health Ministry 
+(Ministerio da Saude) of the Federal Government of Brazil. This 
+software was developed by the staff of the LBBC as part of their 
+official duties. According to federal regulations, this software 
+is therefore public domain.  
+
+This software is provided as is and the INCA does make any guarantee 
+regarding the accuracy/quality/reliability of the results. The INCA 
+cannot be held accountable for any hardware or software damage that 
+might be caused through the use or misuse of this software.  
+
+The LBBC encourages researchers using our software to acknowledge us. 
+The software can be distributed freely and modified given that any derivative 
+bears an acknowledgment that it was derived from our original software.
+
+
+
+
+CONTACT
+
+For any problem/bug report/questions, please contact: passetti@inca.gov.br
+
+
+
+
+
+
+
+
